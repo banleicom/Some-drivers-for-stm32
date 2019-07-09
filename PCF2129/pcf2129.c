@@ -129,6 +129,7 @@ void PCF2129_set24mode(void) {
 uint8_t PCF2129_read(uint8_t address) {
     uint8_t data;
     HAL_I2C_Mem_Read(&(pcf2129.i2c_h), pcf2129.i2caddr, address, 1, &data, 1, I2C_TIMEOUT);
+	return data;
 }
 
 /*
