@@ -60,12 +60,12 @@ void PCF2129_configure(void) {
 =============================================================================
 */
 void PCF2129_getDate(void) {
-    pcf2129.date.ss=(PCF2129_read(PCF2129_SECONDS));
-    pcf2129.date.mm=(PCF2129_read(PCF2129_MINUTES));
-    pcf2129.date.hh=(PCF2129_read(PCF2129_HOURS));
-    pcf2129.date.d=(PCF2129_read(PCF2129_DAYS));
-    pcf2129.date.m=(PCF2129_read(PCF2129_MONTHS));
-    pcf2129.date.y=(PCF2129_read(PCF2129_YEARS));
+    pcf2129.date.ss=bcdToDec(PCF2129_read(PCF2129_SECONDS));
+    pcf2129.date.mm=bcdToDec(PCF2129_read(PCF2129_MINUTES));
+    pcf2129.date.hh=bcdToDec(PCF2129_read(PCF2129_HOURS));
+    pcf2129.date.d=bcdToDec(PCF2129_read(PCF2129_DAYS));
+    pcf2129.date.m=bcdToDec(PCF2129_read(PCF2129_MONTHS));
+    pcf2129.date.y=bcdToDec(PCF2129_read(PCF2129_YEARS));
 }
 
 /*
@@ -121,14 +121,14 @@ void PCF2129_set24mode(void) {
 /*
 =============================================================================
  *  @brief :       读取一个寄存器内容
- *  @note :
+ *  @note :        读寄存器会芯片自动加一 
  *  @param :None
  *  @retva l: None
 =============================================================================
 */
 uint8_t PCF2129_read(uint8_t address) {
     uint8_t data;
-    HAL_I2C_Mem_Read(&(pcf2129.i2c_h), pcf2129.i2caddr, address, 1, &data, 1, I2C_TIMEOUT);
+    HAL_I2C_Mem_Read(&(pcf2129.i2c_h), pcf2129.i2caddr, address-1, 1, &data, 1, I2C_TIMEOUT);
 	return data;
 }
 
